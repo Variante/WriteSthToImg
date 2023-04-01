@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 
 class WriteSthToImg:
-    def __init__(self, template=None, left_bits=0):
+    def __init__(self, template=None, left_bits=5):
         if not isinstance(template, str):
             template = 'template.png'
         _, self.template = cv2.threshold(cv2.imread(template, cv2.IMREAD_GRAYSCALE), 127, 255, cv2.THRESH_BINARY)

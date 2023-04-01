@@ -130,3 +130,5 @@ dmypy.json
 
 # test images
 *.png
+*.jpg
+\.*
