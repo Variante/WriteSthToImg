@@ -4,7 +4,7 @@ import cv2
 if __name__ == '__main__':
     with open('text_to_enc.txt', 'r') as f:
         text = f.read()
-    for i in range(6):
+    for i in range(5, 6):
         w = WriteSthToImg(left_bits=i)
         img = w.to_img(text)
         print('Encoded shape: ', img.shape)
