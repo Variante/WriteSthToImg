@@ -7,7 +7,7 @@ class WriteSthToImg:
     def __init__(self, template=None, left_bits=0):
         if not isinstance(template, str):
             template = 'template.png'
-        self.template = cv2.imread(template, cv2.IMREAD_GRAYSCALE)
+        _, self.template = cv2.threshold(cv2.imread(template, cv2.IMREAD_GRAYSCALE), 127, 255, cv2.THRESH_BINARY)
         self.left_bits = left_bits # from 0 to 4
         self.head_len = 16
         self.scale = 1
@@ -53,7 +53,7 @@ class WriteSthToImg:
             template_height = int(np.ceil(np.sqrt(area_of_template / self.wh_ratio)))
             template_width = int(template_height * self.wh_ratio)
             
-            target_img = cv2.resize(self.template, (template_width, template_height))
+            target_img = cv2.resize(self.template, (template_width, template_height), interpolation=cv2.INTER_NEAREST)
             
             mask_indices = np.argwhere(target_img != 255)
    
@@ -120,7 +120,7 @@ class WriteSthToImg:
             img = img.astype(np.uint8)
  
         size = (img.shape[1], img.shape[0])
-        target_img = cv2.resize(self.template, size)
+        target_img = cv2.resize(self.template, size, interpolation=cv2.INTER_NEAREST)
         mask_indices = np.argwhere(target_img != 255)
         
         chn = np.bitwise_and(np.right_shift(img[mask_indices[:, 0], mask_indices[:, 1]], self.left_bits), self._get_bit_mask())
